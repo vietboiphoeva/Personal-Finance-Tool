@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: 'Helvetica Neue', monospace; background: #111; color: #fff; text-align: center; margin: 0; padding: 12px; }
+    .title { font-size: 11px; letter-spacing: 3px; color: #888; text-transform: uppercase; margin-bottom: 8px; }
+    .grid { display: flex; justify-content: space-around; gap: 10px; }
+    .card { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 10px 16px; flex: 1; }
+    .label { font-size: 10px; letter-spacing: 1.5px; color: #aaa; text-transform: uppercase; }
+    .clock { font-size: 20px; font-weight: 700; color: #00ff88; margin: 4px 0; font-variant-numeric: tabular-nums; }
+    .survival { color: #00b4d8; }
+    .sub { font-size: 9px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title">EVERY SECOND COUNTS</div>
+  <div class="grid">
+    <div class="card">
+      <div class="label">Lifestyle Runway</div>
+      <div id="lifestyle-clock" class="clock">--d --h --m --s</div>
+      <div class="sub">At $2,950/mo burn</div>
+    </div>
+    <div class="card">
+      <div class="label">Survival Runway</div>
+      <div id="survival-clock" class="clock survival">--d --h --m --s</div>
+      <div class="sub">At $1,215/mo core burn</div>
+    </div>
+  </div>
+  <script>
+    const lifestyleEnd = new Date("2027-03-17T00:00:00").getTime();
+    const survivalEnd  = new Date("2028-02-05T00:00:00").getTime();
+
+    function updateClocks() {
+      const now = new Date().getTime();
+      function formatDiff(target) {
+        const diff = Math.max(0, target - now);
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        return `${d}d ${h}h ${m}m ${s}s`;
+      }
+      document.getElementById("lifestyle-clock").innerText = formatDiff(lifestyleEnd);
+      document.getElementById("survival-clock").innerText  = formatDiff(survivalEnd);
+    }
+    setInterval(updateClocks, 1000);
+    updateClocks();
+  </script>
+</body>
+</html>
